@@ -16,12 +16,17 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
 
     reg [15:0] write_data;
     wire tri_state_control;
-    wire [17:0] upper_addr, lower_addr;
+    wire [17:0] write_upper_addr, write_lower_addr, read_first_addr, read_second_addr, read_third_addr, read_forth_addr;
 
     reg [15:0] lower_data, upper_data;
 
-    assign upper_addr = {address[18:2] , 1'b0};
-    assign lower_addr = {address[18:2] , 1'b1};
+    assign write_upper_addr = {address[18:2] , 1'b0};
+    assign write_lower_addr = {address[18:2] , 1'b1};
+
+    assign read_first_addr = {address[18:3] , 2'b00};
+    assign read_second_addr = {address[18:3] , 2'b01};
+    assign read_third_addr = {address[18:3] , 2'b10};
+    assign read_forth_addr = {address[18:3] , 2'b11};
 
     reg [3:0] ps,ns ;
     parameter [3:0] IDLE = 4'b0, WRITE_LOW = 4'b0001, WRITE_HIGH = 4'b0010, WRITE_END = 4'b0011,
