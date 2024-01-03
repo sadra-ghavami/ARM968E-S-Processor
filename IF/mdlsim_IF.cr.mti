@@ -1,0 +1,22 @@
+{C:/CA LAB C/IF/IF_Adder.v} {1 {vlog -work work -stats=none {C:/CA LAB C/IF/IF_Adder.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module IF_Adder
+
+Top level modules:
+	IF_Adder
+
+} {} {}} {C:/CA LAB C/IF/IF_Adder_TB.v} {1 {vlog -work work -stats=none {C:/CA LAB C/IF/IF_Adder_TB.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module IF_Adder_tb
+
+Top level modules:
+	IF_Adder_tb
+
+} {} {}} {C:/CA LAB C/IF/MUX2.v} {1 {vlog -work work -stats=none {C:/CA LAB C/IF/MUX2.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module MUX2
+
+Top level modules:
+	MUX2
+
+} {} {}}

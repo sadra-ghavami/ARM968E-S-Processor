@@ -1,0 +1,69 @@
+# Compile of IF_Adder.v failed with 1 errors.
+# Compile of IF_Adder_TB.v failed with 2 errors.
+# 2 compiles, 2 failed with 3 errors.
+# Compile of IF_Adder.v failed with 1 errors.
+# Compile of IF_Adder_TB.v failed with 2 errors.
+# 2 compiles, 2 failed with 3 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v failed with 2 errors.
+# 2 compiles, 1 failed with 2 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v failed with 4 errors.
+# 2 compiles, 1 failed with 4 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v failed with 2 errors.
+# 2 compiles, 1 failed with 2 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v failed with 2 errors.
+# Compile of MUX2.v was successful.
+# Compile of Register.v was successful.
+# 4 compiles, 1 failed with 2 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v was successful.
+# Compile of MUX2.v was successful.
+# Compile of Register.v was successful.
+# 4 compiles, 0 failed with no errors.
+vsim -gui work.IF_Adder_tb
+# vsim -gui work.IF_Adder_tb 
+# Start time: 15:08:57 on Oct 18,2023
+# Loading work.IF_Adder_tb
+# Loading work.IF_Adder
+add wave sim:/IF_Adder_tb/*
+run -all
+# ** Note: $stop    : C:/CA LAB C/IF/IF_Adder_TB.v(16)
+#    Time: 140 ns  Iteration: 0  Instance: /IF_Adder_tb
+# Break in Module IF_Adder_tb at C:/CA LAB C/IF/IF_Adder_TB.v line 16
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v was successful.
+# Compile of MUX2.v was successful.
+# Compile of Register.v was successful.
+# 4 compiles, 0 failed with no errors.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.IF_Adder_tb
+# Loading work.IF_Adder
+run -all
+# ** Note: $stop    : C:/CA LAB C/IF/IF_Adder_TB.v(16)
+#    Time: 140 ns  Iteration: 0  Instance: /IF_Adder_tb
+# Break in Module IF_Adder_tb at C:/CA LAB C/IF/IF_Adder_TB.v line 16
+quit -sim
+# End time: 15:55:40 on Oct 18,2023, Elapsed time: 0:46:43
+# Errors: 0, Warnings: 1
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v was successful.
+# Compile of MUX2.v was successful.
+# Compile of Register.v failed with 1 errors.
+# Compile of IF_Module.v failed with 6 errors.
+# 5 compiles, 2 failed with 7 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v was successful.
+# Compile of MUX2.v was successful.
+# Compile of Register.v was successful.
+# Compile of IF_Module.v failed with 6 errors.
+# 5 compiles, 1 failed with 6 errors.
+# Compile of IF_Adder.v was successful.
+# Compile of IF_Adder_TB.v was successful.
+# Compile of MUX2.v was successful.
+# Compile of Register.v was successful.
+# Compile of IF_Module.v was successful.
+# 5 compiles, 0 failed with no errors.
