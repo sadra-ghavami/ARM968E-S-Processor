@@ -20,8 +20,8 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
 
     reg [15:0] first_data, second_data, third_data, forth_data;
 
-    assign write_upper_addr = {address[18:2] , 1'b0};
-    assign write_lower_addr = {address[18:2] , 1'b1};
+    assign write_upper_addr = {address[18:2] , 1'b1};
+    assign write_lower_addr = {address[18:2] , 1'b0};
 
     assign read_first_addr = {address[18:3] , 2'b00};
     assign read_second_addr = {address[18:3] , 2'b01};
@@ -45,7 +45,7 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
     always @(ps, W_EN, R_EN) begin
         ns <= IDLE;
         case (ps)
-            IDLE: ns <= (~W_EN && ~R_EN) ? IDLE : W_EN ? WRITE_LOW : READ_LOW;
+            IDLE: ns <= (~W_EN && ~R_EN) ? IDLE : W_EN ? WRITE_LOW : FIRST_READ;
             WRITE_LOW: ns <= WRITE_HIGH;
             WRITE_HIGH: ns <= WRITE_END;
             WRITE_END: ns <= STALL;

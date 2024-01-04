@@ -47,6 +47,10 @@ module Cache(
                 LRU[i] = 1'b0;
                 valid_bit_way0[i] = 1'b0;
                 valid_bit_way1[i] = 1'b0;
+                tag_bit_way0[i] = 0;
+                tag_bit_way1[i] = 0;
+                way0_data[i] = 64'b0;
+                way1_data[i] = 64'b0;
             end
             ps <= IDLE;
         end
@@ -111,6 +115,7 @@ module Cache(
     assign selected_data_way0 = way0_data[index];
     assign selected_data_way1 = way1_data[index];
     assign start = (R_EN & ~hit) | W_EN;
+    assign data_out = selected_data;
     
 
 endmodule

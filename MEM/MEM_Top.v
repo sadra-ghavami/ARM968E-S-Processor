@@ -19,10 +19,26 @@ module MEM_Top(clk, rst, WB_EN_in, MEM_R_EN_in, MEM_W_EN_in, ALU_res_in, Dest_in
     output  SRAM_OE_N;
 
     wire[31:0] MEM_data;
+    wire SRAM_W_EN, SRAM_R_EN;
+    wire [31:0] SRAM_address, SRAM_data_in;
+    wire[63:0] SRAM_data_out;
+    wire SRAM_ready;
 
-    Sram_Controller sram(.clk(clk), .rst(rst), .W_EN(MEM_W_EN_in), .R_EN(MEM_R_EN_in), 
-                         .address(ALU_res_in), .data_in(Val_Rm_in), .data_out(MEM_data), .ready(mem_ready), .SRAM_DQ(SRAM_DQ),
-                         .SRAM_ADDR(SRAM_ADDR), .SRAM_UB_N(SRAM_UB_N), .SRAM_LB_N(SRAM_LB_N), .SRAM_WE_N(SRAM_WE_N), .SRAM_CE_N(SRAM_CE_N),
+    Cache cache(
+        .clk(clk), .rst(rst),
+        .W_EN(MEM_W_EN_in), .R_EN(MEM_R_EN_in),
+        .address(ALU_res_in), .data_in(Val_Rm_in), .data_out(MEM_data), .ready(mem_ready),
+
+        .SRAM_W_EN(SRAM_W_EN), .SRAM_R_EN(SRAM_R_EN),
+        .SRAM_address(SRAM_address), .SRAM_data_in(SRAM_data_in),
+        .SRAM_data_out(SRAM_data_out), .SRAM_ready(SRAM_ready)
+    );
+
+
+    Sram_Controller sram(.clk(clk), .rst(rst), .W_EN(SRAM_W_EN), .R_EN(SRAM_R_EN), 
+                         .address(SRAM_address), .data_in(SRAM_data_in), .data_out(SRAM_data_out),
+                         .ready(SRAM_ready), .SRAM_DQ(SRAM_DQ), .SRAM_ADDR(SRAM_ADDR),
+                         .SRAM_UB_N(SRAM_UB_N), .SRAM_LB_N(SRAM_LB_N), .SRAM_WE_N(SRAM_WE_N), .SRAM_CE_N(SRAM_CE_N),
                          .SRAM_OE_N(SRAM_OE_N));
     
     assign Dest_out = Dest_in;
