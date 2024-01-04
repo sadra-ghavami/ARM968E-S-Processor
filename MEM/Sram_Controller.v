@@ -2,7 +2,7 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
                     SRAM_ADDR, SRAM_UB_N, SRAM_LB_N, SRAM_WE_N, SRAM_CE_N, SRAM_OE_N);
     input clk, rst, W_EN, R_EN;
     input[31:0] address, data_in;
-    output[31:0] data_out;
+    output[63:0] data_out;
 
     output reg ready;
 
@@ -18,7 +18,7 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
     wire tri_state_control;
     wire [17:0] write_upper_addr, write_lower_addr, read_first_addr, read_second_addr, read_third_addr, read_forth_addr;
 
-    reg [15:0] lower_data, upper_data;
+    reg [15:0] first_data, second_data, third_data, forth_data;
 
     assign write_upper_addr = {address[18:2] , 1'b0};
     assign write_lower_addr = {address[18:2] , 1'b1};
@@ -30,8 +30,8 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
 
     reg [3:0] ps,ns ;
     parameter [3:0] IDLE = 4'b0, WRITE_LOW = 4'b0001, WRITE_HIGH = 4'b0010, WRITE_END = 4'b0011,
-                    READ_LOW = 4'b0100, READ_HIGH = 4'b0101, DATA_HIGH = 4'b0110, STALL = 4'b0111,
-                    READY_STATE = 4'b1000;
+                    FIRST_READ = 4'b0100, SECOND_READ = 4'b0101, THIRD_READ = 4'b0110, FORTH_READ = 4'b0111,
+                    GET_LAST_DATA = 4'b1000, STALL = 4'b1001, READY_STATE = 4'b1010;
 
     always @(posedge clk, posedge rst) begin
         if (rst) begin
@@ -51,9 +51,11 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
             WRITE_END: ns <= STALL;
             STALL: ns <= READY_STATE;
             READY_STATE: ns <= IDLE;
-            READ_LOW: ns <= READ_HIGH;
-            READ_HIGH: ns <= DATA_HIGH;
-            DATA_HIGH: ns <= STALL;
+            FIRST_READ: ns <= SECOND_READ;
+            SECOND_READ: ns <= THIRD_READ;
+            THIRD_READ: ns <= FORTH_READ;
+            FORTH_READ: ns <= GET_LAST_DATA;
+            GET_LAST_DATA: ns <= IDLE;
             default: ns <= IDLE;
         endcase
         
@@ -63,24 +65,37 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
         SRAM_WE_N = 1'b1; write_data = 16'b0; SRAM_ADDR = 18'b0; ready = 1'b0;
         case (ps)
             WRITE_LOW: begin
-                SRAM_ADDR = lower_addr;
+                SRAM_ADDR = write_lower_addr;
                 SRAM_WE_N = 1'b0;
                 write_data = data_in [15:0];
             end
             WRITE_HIGH: begin
-                SRAM_ADDR = upper_addr;
+                SRAM_ADDR = write_upper_addr;
                 SRAM_WE_N = 1'b0;
                 write_data = data_in [31:16];
             end
+
             READY_STATE: ready = 1'b1;
-            READ_LOW: begin
-                SRAM_ADDR = lower_addr;
+
+            FIRST_READ: begin
+                SRAM_ADDR = read_first_addr;
             end
-            READ_HIGH: begin
-                SRAM_ADDR = upper_addr;
-                lower_data = SRAM_DQ;
+            SECOND_READ: begin
+                SRAM_ADDR = read_second_addr;
+                first_data = SRAM_DQ;
             end
-            DATA_HIGH: upper_data = SRAM_DQ;
+            THIRD_READ: begin
+                SRAM_ADDR = read_third_addr;
+                second_data = SRAM_DQ;
+            end
+            FORTH_READ: begin
+                SRAM_ADDR = read_forth_addr;
+                third_data = SRAM_DQ;
+            end
+            GET_LAST_DATA: begin
+                forth_data = SRAM_DQ;
+                ready = 1'b1;
+            end
             default: begin
                 SRAM_WE_N = 1'b1; write_data = 16'b0; SRAM_ADDR = 18'b0; ready = 1'b0;
             end
@@ -94,7 +109,7 @@ module Sram_Controller(clk, rst, W_EN, R_EN, address, data_in, data_out, ready,S
     assign SRAM_LB_N = 1'b0;
     assign SRAM_CE_N = 1'b0;
     assign SRAM_OE_N = 1'b0;
-    assign data_out = {upper_data, lower_data};
+    assign data_out = {forth_data, third_data, second_data, first_data};
 
 endmodule
 
