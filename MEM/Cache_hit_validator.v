@@ -1,9 +1,9 @@
-module Cache_hit_validation(
+module Cache_hit_validator(
     input [9:0] tag_way0, tag_way1, tag_address,
     input valid_way0, valid_way1,
     input [63:0] data_way0, data_way1,
     input [2:0] offset,
-    output hit,
+    output hit, hit_way0, hit_way1,
     output [31:0] data_out
 );
     wire comperator_out0, comperator_out1, sel1, sel2;
@@ -16,6 +16,8 @@ module Cache_hit_validation(
     assign sel1 = valid_way1 & comperator_out1;
 
     assign hit = sel0 | sel1;
+    assign hit_way0 = sel0;
+    assign hit_way1 = sel1;
 
     Cache_MUX2 mux(.inp0(data_way0), .inp1(data_way1), .sel0(sel0), .sel1(sel1), .out_put(selected_data));
 
