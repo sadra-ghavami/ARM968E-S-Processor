@@ -14,6 +14,7 @@ module Top_test();
     initial begin
         #2 rst = 1'b1;
         #3 rst = 1'b0;
-        #10000 $stop;
+        #5000 $stop;
+        #5000 $stop;
     end
 endmodule

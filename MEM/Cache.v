@@ -91,10 +91,14 @@ module Cache(
             end
             WRITE_STATE: SRAM_W_EN = 1'b1;
             WRITEBACK_DATA_STATE: begin
-                if(hit_way0)
+                if(hit_way0) begin
                     valid_bit_way0[index] = 1'b0;
-                else if(hit_way1)
+                    LRU[index] = 1'b0;
+                end
+                else if(hit_way1) begin
                     valid_bit_way1[index] = 1'b0;
+                    LRU[index] = 1'b1;
+                end
                 else;
             end
             READY_STATE: ready = 1'b1;
