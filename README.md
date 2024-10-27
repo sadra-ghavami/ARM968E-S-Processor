@@ -3,6 +3,7 @@
 ## Overview
 
 This project showcases a custom-designed ARM968E-S processor implemented on an Altera Cyclone II EP2C35F672C6 FPGA using Verilog. The processor architecture is organized in a five-stage pipeline, including Instruction Fetch, Instruction Decode, Execution, Memory Access, and Write-Back. Each pipeline stage is detailed below, with accompanying Verilog files, simulation outputs, and testing procedures.
+![Alt text](Figures/Data_Forwarding/Datapath.png)
 
 ## Repository Structure
 
